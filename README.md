@@ -42,16 +42,14 @@ To create a policy that restricts resource deployment to specific regions, follo
 
    ```json
 
-    "if": {
-        "allOf": [
-            {
-                "field": "type",
-                "notIn": [
-                    "Microsoft.Compute/virtualMachines",
-                    "Microsoft.Storage/storageAccounts"
-                ]
-            }
-        ]
+     "if": {
+        "not": {
+            "field": "location",
+            "in": [
+                "eastus",
+                "westus"
+            ]
+        }
     },
     "then": {
         "effect": "deny"
@@ -76,14 +74,16 @@ Next, create a policy that restricts the types of resources that can be created.
 1. **Create a JSON Policy File**: Create another file named `RestrictResourceTypesPolicy.json`. Below is an example policy that only allows `Microsoft.Storage/storageAccounts` and `Microsoft.Network/virtualNetworks`:
 
    ```json
-    "if": {
-        "not": {
-            "field": "location",
-            "in": [
-                "eastus",
-                "westeurope"
-            ]
-        }
+     "if": {
+        "allOf": [
+            {
+                "field": "type",
+                "notIn": [
+                    "Microsoft.Compute/virtualMachines",
+                    "Microsoft.Storage/storageAccounts"
+                ]
+            }
+        ]
     },
     "then": {
         "effect": "deny"
