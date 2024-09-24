@@ -190,7 +190,11 @@ By following these steps, you can effectively manage which resources can be depl
 
 
 
-Citations:
+
+
+
+
+Additional Sources:
 
  https://learn.microsoft.com/en-in/azure/governance/policy/overview
 
