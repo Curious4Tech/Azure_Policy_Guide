@@ -23,12 +23,12 @@ Before you begin, ensure you have the following:
 
 ## Creating the Policies
 
-Login to Azure: Open your terminal and log in using:
+Login to Azure : Open your terminal and log in using:
 
  ```bash
    az login
    ```
-Set Your Subscription Context**: If you have multiple subscriptions, set the context to your desired subscription:
+Set Your Subscription Context : If you have multiple subscriptions, set the context to your desired subscription:
 
    ```bash
    az account set --subscription "<Your Subscription ID>"
