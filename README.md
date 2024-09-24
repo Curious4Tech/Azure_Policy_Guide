@@ -1,7 +1,7 @@
 This README provides a comprehensive guide on how to set up two distinct Azure Policies using Azure CLI: one for allowing resource creation in specific regions and another for restricting resource type creation. These policies are essential for maintaining compliance and governance in your Azure environment.
 
 ## Table of Contents
-
+- [Azure Policies](#azure-policies)
 - [Prerequisites](#prerequisites)
 - [Creating the Policies](#creating-the-policies)
   - [Policy 1: Allowed Locations](#policy-1-allowed-locations)
@@ -10,6 +10,9 @@ This README provides a comprehensive guide on how to set up two distinct Azure P
   - [Assigning to a Subscription](#assigning-to-a-subscription)
   - [Assigning to a Resource Group](#assigning-to-a-resource-group)
 - [Testing the Configuration](#testing-the-configuration)
+
+## Azure Policie
+Azure Policies enable organizations to enforce governance by defining rules and requirements for resource configurations in the Azure environment. With policies, administrators can ensure that resources comply with organizational standards, such as restricting resource creation to specific regions, mandating tags, or enforcing security settings. Azure Policies help in monitoring compliance in real-time, automating enforcement, and providing detailed reporting. They empower teams to maintain consistency, reduce misconfigurations, and ensure adherence to security and cost-management practices, leading to a more secure, compliant, and optimized cloud environment. This proactive management tool is essential for maintaining operational excellence in Azure deployments.
 
 ## Prerequisites
 
@@ -31,7 +34,6 @@ az login
    ```
 ### Policy 1: Allowed Locations
 
-To create a policy that restricts resource deployment to specific regions, follow these steps:
 Below is an example policy that allows only  ```eastus``` and ```westus``` regions:
 1. **Create the Allowed Locations Policy**: Run the following command in your terminal:
 
