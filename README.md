@@ -56,8 +56,7 @@ To create a policy that restricts resource deployment to specific regions, follo
     "then": {
         "effect": "deny"
     }
-}
---mode All
+} --mode All
    ```
 
 2. **Create the Policy Definition Using Azure CLI**: Run the following command, replacing `<path-to-your-json-file>` with the actual path:
