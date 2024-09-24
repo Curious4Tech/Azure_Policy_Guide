@@ -188,8 +188,23 @@ To verify that your policies are working as intended, attempt to create resource
 
 By following these steps, you can effectively manage which resources can be deployed in your Azure environment based on region and type. This ensures compliance with organizational policies and regulatory requirements, helping maintain a secure and organized cloud infrastructure.
 
+<<<<<<< HEAD
 Additional Sources:
 
  https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/azure-server-management/common-policies
 
  https://learn.microsoft.com/en-in/azure/governance/policy/overview
+=======
+Citations:
+
+[1] https://learn.microsoft.com/en-us/azure/governance/policy/assign-policy-azurecli
+
+
+[2] https://learn.microsoft.com/en-us/cli/azure/policy/assignment?view=azure-cli-latest
+
+
+[3] https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/azure-server-management/common-policies
+
+
+[4] https://learn.microsoft.com/en-in/azure/governance/policy/overview
+>>>>>>> 80f60db533229b816e41b609babc8697e25e9488
