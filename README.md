@@ -32,7 +32,7 @@ az login
 ### Policy 1: Allowed Locations
 
 To create a policy that restricts resource deployment to specific regions, follow these steps:
-Below is an example policy that allows only eastus and westus regions:
+Below is an example policy that allows only  ```bash eastus``` and ```bash westus``` regions:
 1. **Create the Allowed Locations Policy**: Run the following command in your terminal:
 
    ```bash
