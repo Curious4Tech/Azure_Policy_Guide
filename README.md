@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-Here’s the updated `README.md` file incorporating the provided code snippets for setting up Azure Policies for allowed locations and allowed resource types using Azure CLI.
 
-```markdown
-=======
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
+This guide incorporating the provided code snippets for setting up Azure Policies for allowed locations and allowed resource types using Azure CLI.
+
+
 # Azure Policy Setup for Allowed Locations and Resource Types
 
 This README provides a comprehensive guide on how to set up two distinct Azure Policies using Azure CLI: one for allowing resource creation in specific regions and another for restricting resource type creation. These policies are essential for maintaining compliance and governance in your Azure environment.
@@ -45,7 +43,7 @@ To create a policy that restricts resource deployment to specific regions, follo
                    "field": "location",
                    "in": [
                        "eastus",
-                       "westeurope"
+                       "westus"
                    ]
                }
            },
@@ -54,39 +52,12 @@ To create a policy that restricts resource deployment to specific regions, follo
            }
        }' \
        --mode All
-<<<<<<< HEAD
    ```
 
 ### Policy 2: Allowed Resource Types
-=======
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
 
-Policy 2: Allowed Resource Types
 Next, create a policy that restricts the types of resources that can be created.
-Create the Allowed Resource Types Policy: Run the following command:
-bash
-az policy definition create --name "allowed-resource-types" \
-    --display-name "Allowed Resource Types" \
-    --description "This policy restricts the types of resources that can be deployed." \
-    --rules '{
-        "if": {
-            "allOf": [
-                {
-                    "field": "type",
-                    "notIn": [
-                        "Microsoft.Compute/virtualNetworks",
-                      "Microsoft.Storage/storageAccounts"
-                    ]
-                }
-            ]
-        },
-        "then": {
-            "effect": "deny"
-        }
-    }' \
-    --mode All
 
-<<<<<<< HEAD
 1. **Create the Allowed Resource Types Policy**: Run the following command:
 
    ```bash
@@ -116,27 +87,11 @@ az policy definition create --name "allowed-resource-types" \
 
 ### Assigning to a Subscription
 
-=======
-Assigning the Policies
-Assigning to a Subscription
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
 To assign these policies at the subscription level, use the following commands:
-Login to Azure: Open your terminal and log in using:
-bash
+1. **Login to Azure**: Open your terminal and log in using:
+ ```bash
 az login
-
-Set Your Subscription Context: If you have multiple subscriptions, set the context to your desired subscription:
-bash
-az account set --subscription "<Your Subscription ID>"
-
-Assign the Allowed Locations Policy:
-bash
-az policy assignment create --name 'AllowedLocationsAssignment' \
-    --display-name 'Allowed Locations Assignment' \
-    --scope '/subscriptions/<Your Subscription ID>' \
-    --policy 'allowed-locations'
-
-<<<<<<< HEAD
+   ```
 2. **Set Your Subscription Context**: If you have multiple subscriptions, set the context to your desired subscription:
 
    ```bash
@@ -162,25 +117,7 @@ az policy assignment create --name 'AllowedLocationsAssignment' \
    ```
 
 ### Assigning to a Resource Group
-=======
-Assign the Allowed Resource Types Policy:
-bash
-az policy assignment create --name 'AllowedResourceTypesAssignment' \
-    --display-name 'Allowed Resource Types Assignment' \
-    --scope '/subscriptions/<Your Subscription ID>' \
-    --policy 'allowed-resource-types'
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
 
-Assigning to a Resource Group
-To assign these policies at the resource group level, use similar commands but specify the resource group scope:
-Assign the Allowed Locations Policy:
-bash
-az policy assignment create --name 'AllowedLocationsAssignmentRG' \
-    --display-name 'Allowed Locations Assignment for RG' \
-    --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
-    --policy 'allowed-locations'
-
-<<<<<<< HEAD
 1. **Assign the Allowed Locations Policy**:
 
    ```bash
@@ -200,42 +137,28 @@ az policy assignment create --name 'AllowedLocationsAssignmentRG' \
    ```
 
 ## Testing the Configuration
-=======
-Assign the Allowed Resource Types Policy:
-bash
-az policy assignment create --name 'AllowedResourceTypesAssignmentRG' \
-    --display-name 'Allowed Resource Types Assignment for RG' \
-    --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
-    --policy 'allowed-resource-types'
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
 
-Testing the Configuration
 To verify that your policies are working as intended, attempt to create resources that violate these policies.
-Test Region Restriction: Try creating a storage account in an unauthorized region (e.g., centralus):
-bash
+ 1. **Test Region Restriction**: Try creating a storage account in an unauthorized region (e.g., centralus):
+ ```bash
 az storage account create --name "<YourStorageAccountName>" \
     --resource-group "<YourResourceGroupName>" \
     --location "centralus" \
     --sku Standard_LRS
-
-Test Resource Type Restriction: Try creating an unauthorized resource type (e.g., Microsoft.Compute/virtualMachines if not allowed):
-bash
+```
+2. **Test Resource Type Restriction**: Try creating an unauthorized resource type (e.g., Microsoft.Compute/virtualMachines if not allowed):
+ ```bash
 az vm create --resource-group "<YourResourceGroupName>" \
     --name "<YourVMName>" \
     --image UbuntuLTS
-
-Check for Errors: You should receive errors indicating that resource creation is denied due to policy restrictions.
-Review Compliance: You can check compliance status by running:
-bash
-az policy assignment list --scope '/subscriptions/<Your Subscription ID>'
-
-Conclusion
-By following these steps, you can effectively manage which resources can be deployed in your Azure environment based on region and type. This ensures compliance with organizational policies and regulatory requirements, helping maintain a secure and organized cloud infrastructure.
 ```
-
-<<<<<<< HEAD
-This updated README provides clear instructions on how to set up both policies using Azure CLI, including commands for creating and assigning them, along with testing procedures.
-=======
+3. **Check for Errors**: You should receive errors indicating that resource creation is denied due to policy restrictions.
+Review Compliance: You can check compliance status by running:
+ ```bash
+az policy assignment list --scope '/subscriptions/<Your Subscription ID>'
+```
+## Conclusion
+By following these steps, you can effectively manage which resources can be deployed in your Azure environment based on region and type. This ensures compliance with organizational policies and regulatory requirements, helping maintain a secure and organized cloud infrastructure.
 
 
 ## Additional Sources:
@@ -247,8 +170,3 @@ This updated README provides clear instructions on how to set up both policies u
  https://learn.microsoft.com/en-us/cli/azure/policy/assignment?view=azure-cli-latest
 
  https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/azure-server-management/common-policies
-
- 
-
- 
->>>>>>> b04f97b64807e6e11b85667b7007c0a38121c779
