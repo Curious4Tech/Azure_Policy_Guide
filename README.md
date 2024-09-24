@@ -41,7 +41,7 @@ To create a policy that restricts resource deployment to specific regions, follo
 1. **Create a JSON Policy File**: Open your preferred code editor and create a new file named `AllowSpecificRegionsPolicy.json`. Below is an example policy that allows only `eastus` and `westus` regions:
 
    ```json
-   {
+
     "if": {
         "allOf": [
             {
@@ -56,7 +56,7 @@ To create a policy that restricts resource deployment to specific regions, follo
     "then": {
         "effect": "deny"
     }
-} --mode All
+  
    ```
 
 2. **Create the Policy Definition Using Azure CLI**: Run the following command, replacing `<path-to-your-json-file>` with the actual path:
