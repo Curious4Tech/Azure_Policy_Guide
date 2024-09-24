@@ -128,10 +128,6 @@ By following these steps, you can effectively manage which resources can be depl
 
 Citations:
 [1] https://learn.microsoft.com/en-us/azure/governance/policy/assign-policy-azurecli
-[2] https://stackoverflow.com/questions/44737121/azure-arm-policies-using-the-predefined-definitions-via-cli
 [3] https://learn.microsoft.com/en-us/cli/azure/policy/assignment?view=azure-cli-latest
 [4] https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/azure-server-management/common-policies
-[5] https://www.blinkops.com/blog/managing-policies-with-the-azure-cli
-[6] https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/governance/policy/tutorials/create-and-manage.md
-[7] https://marcelzehner.ch/2016/09/28/azure-resource-policies-a-complete-walkthrough/
 [8] https://learn.microsoft.com/en-in/azure/governance/policy/overview
