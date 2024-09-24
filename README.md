@@ -66,7 +66,7 @@ To create a policy that restricts resource deployment to specific regions, follo
        --display-name 'Allow Specific Regions' \
        --description 'Policy to allow resource creation only in specific regions.' \
        --rules '@<path-to-your-json-file>' \
-       --mode Indexed
+       --mode All
    ```
 
 ### Policy 2: Restrict Resource Types
@@ -98,7 +98,7 @@ Next, create a policy that restricts the types of resources that can be created.
        --display-name 'Restrict Resource Types' \
        --description 'Policy to restrict resource creation to specific types.' \
        --rules '@<path-to-your-json-file>' \
-       --mode Indexed
+       --mode All
    ```
 
 ## Assigning the Policies
