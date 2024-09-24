@@ -76,7 +76,6 @@ Next, create a policy that restricts the types of resources that can be created.
 1. **Create a JSON Policy File**: Create another file named `RestrictResourceTypesPolicy.json`. Below is an example policy that only allows `Microsoft.Storage/storageAccounts` and `Microsoft.Network/virtualNetworks`:
 
    ```json
-  '{
     "if": {
         "not": {
             "field": "location",
@@ -89,7 +88,7 @@ Next, create a policy that restricts the types of resources that can be created.
     "then": {
         "effect": "deny"
     }
-}' --mode All
+
    ```
 
 2. **Create the Policy Definition Using Azure CLI**: Run the following command:
