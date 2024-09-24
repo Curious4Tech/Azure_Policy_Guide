@@ -32,7 +32,7 @@ az login
 ### Policy 1: Allowed Locations
 
 To create a policy that restricts resource deployment to specific regions, follow these steps:
-Below is an example policy that allows only  ```bash eastus``` and ```bash westus``` regions:
+Below is an example policy that allows only  ```eastus``` and ```westus``` regions:
 1. **Create the Allowed Locations Policy**: Run the following command in your terminal:
 
    ```bash
@@ -60,7 +60,7 @@ Below is an example policy that allows only  ```bash eastus``` and ```bash westu
 ### Policy 2: Allowed Resource Types
 
 Next, create a policy that restricts the types of resources that can be created.
-Below is an example policy that only allows Microsoft.Storage/storageAccounts and Microsoft.Network/virtualNetworks:
+Below is an example policy that only allows ```Microsoft.Storage/storageAccounts``` and ```Microsoft.Network/virtualNetworks```:
 
 1. **Create the Allowed Resource Types Policy**: Run the following command:
 
