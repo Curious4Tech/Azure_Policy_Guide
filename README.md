@@ -23,6 +23,9 @@ Before you begin, ensure you have the following:
 
 ## Creating the Policies
 
+Login to Azure: Open your terminal and log in using:
+az login
+
 ### Policy 1: Allow Specific Regions
 
 To create a policy that restricts resource deployment to specific regions, follow these steps:
