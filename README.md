@@ -1,4 +1,4 @@
-# Azure Policy Setup for Allowing Specific Resources and Regions
+# Azure Policy Setup for Allowed Locations and Resource Types
 
 This README provides a comprehensive guide on how to set up two distinct Azure Policies using Azure CLI: one for allowing resource creation in specific regions and another for restricting resource type creation. These policies are essential for maintaining compliance and governance in your Azure environment.
 
@@ -6,8 +6,8 @@ This README provides a comprehensive guide on how to set up two distinct Azure P
 
 - [Prerequisites](#prerequisites)
 - [Creating the Policies](#creating-the-policies)
-  - [Policy 1: Allow Specific Regions](#policy-1-allow-specific-regions)
-  - [Policy 2: Restrict Resource Types](#policy-2-restrict-resource-types)
+  - [Policy 1: Allowed Locations](#policy-1-allowed-locations)
+  - [Policy 2: Allowed Resource Types](#policy-2-allowed-resource-types)
 - [Assigning the Policies](#assigning-the-policies)
   - [Assigning to a Subscription](#assigning-to-a-subscription)
   - [Assigning to a Resource Group](#assigning-to-a-resource-group)
@@ -23,173 +23,119 @@ Before you begin, ensure you have the following:
 
 ## Creating the Policies
 
-Login to Azure : Open your terminal and log in using:
-
- ```bash
-   az login
-   ```
-Set Your Subscription Context : If you have multiple subscriptions, set the context to your desired subscription:
-
-   ```bash
-   az account set --subscription "<Your Subscription ID>"
-   ```
-
-### Policy 1: Allow Specific Regions
+### Policy 1: Allowed Locations
 
 To create a policy that restricts resource deployment to specific regions, follow these steps:
 
-1. **Create a JSON Policy File**: Open your preferred code editor and create a new file named `AllowSpecificRegionsPolicy.json`. Below is an example policy that allows only `eastus` and `westus` regions:
-
-   ```json
-
-     "if": {
-        "not": {
-            "field": "location",
-            "in": [
-                "eastus",
-                "westus"
-            ]
-        }
-    },
-    "then": {
-        "effect": "deny"
-    }
-  
-   ```
-
-2. **Create the Policy Definition Using Azure CLI**: Run the following command, replacing `<path-to-your-json-file>` with the actual path:
+1. **Create the Allowed Locations Policy**: Run the following command in your terminal:
 
    ```bash
-   az policy definition create --name 'AllowSpecificRegions' \
-       --display-name 'Allow Specific Regions' \
-       --description 'Policy to allow resource creation only in specific regions.' \
-       --rules '@<path-to-your-json-file>' \
+   az policy definition create --name "allowed-locations" \
+       --display-name "Allowed Locations" \
+       --description "This policy restricts resource deployment to specified Azure regions." \
+       --rules '{
+           "if": {
+               "not": {
+                   "field": "location",
+                   "in": [
+                       "eastus",
+                       "westeurope"
+                   ]
+               }
+           },
+           "then": {
+               "effect": "deny"
+           }
+       }' \
        --mode All
-   ```
 
-### Policy 2: Restrict Resource Types
-
+Policy 2: Allowed Resource Types
 Next, create a policy that restricts the types of resources that can be created.
+Create the Allowed Resource Types Policy: Run the following command:
+bash
+az policy definition create --name "allowed-resource-types" \
+    --display-name "Allowed Resource Types" \
+    --description "This policy restricts the types of resources that can be deployed." \
+    --rules '{
+        "if": {
+            "allOf": [
+                {
+                    "field": "type",
+                    "notIn": [
+                        "Microsoft.Compute/virtualNetworks",
+                      "Microsoft.Storage/storageAccounts"
+                    ]
+                }
+            ]
+        },
+        "then": {
+            "effect": "deny"
+        }
+    }' \
+    --mode All
 
-1. **Create a JSON Policy File**: Create another file named `RestrictResourceTypesPolicy.json`. Below is an example policy that only allows `Microsoft.Storage/storageAccounts` and `Microsoft.Network/virtualNetworks`:
-
-   ```json
-     "if": {
-        "allOf": [
-            {
-                "field": "type",
-                "notIn": [
-                    "Microsoft.Compute/virtualMachines",
-                    "Microsoft.Storage/storageAccounts"
-                ]
-            }
-        ]
-    },
-    "then": {
-        "effect": "deny"
-    }
-
-   ```
-
-2. **Create the Policy Definition Using Azure CLI**: Run the following command:
-
-   ```bash
-   az policy definition create --name 'RestrictResourceTypes' \
-       --display-name 'Restrict Resource Types' \
-       --description 'Policy to restrict resource creation to specific types.' \
-       --rules '@<path-to-your-json-file>' \
-       --mode All
-   ```
-
-## Assigning the Policies
-
-### Assigning to a Subscription
-
+Assigning the Policies
+Assigning to a Subscription
 To assign these policies at the subscription level, use the following commands:
+Login to Azure: Open your terminal and log in using:
+bash
+az login
 
-1. **Login to Azure**: Open your terminal and log in using:
+Set Your Subscription Context: If you have multiple subscriptions, set the context to your desired subscription:
+bash
+az account set --subscription "<Your Subscription ID>"
 
-   ```bash
-   az login
-   ```
+Assign the Allowed Locations Policy:
+bash
+az policy assignment create --name 'AllowedLocationsAssignment' \
+    --display-name 'Allowed Locations Assignment' \
+    --scope '/subscriptions/<Your Subscription ID>' \
+    --policy 'allowed-locations'
 
-2. **Set Your Subscription Context**: If you have multiple subscriptions, set the context to your desired subscription:
+Assign the Allowed Resource Types Policy:
+bash
+az policy assignment create --name 'AllowedResourceTypesAssignment' \
+    --display-name 'Allowed Resource Types Assignment' \
+    --scope '/subscriptions/<Your Subscription ID>' \
+    --policy 'allowed-resource-types'
 
-   ```bash
-   az account set --subscription "<Your Subscription ID>"
-   ```
-
-3. **Assign the Allow Specific Regions Policy**:
-
-   ```bash
-   az policy assignment create --name 'AllowSpecificRegionsAssignment' \
-       --display-name 'Allow Specific Regions Assignment' \
-       --scope '/subscriptions/<Your Subscription ID>' \
-       --policy 'AllowSpecificRegions'
-   ```
-
-4. **Assign the Restrict Resource Types Policy**:
-
-   ```bash
-   az policy assignment create --name 'RestrictResourceTypesAssignment' \
-       --display-name 'Restrict Resource Types Assignment' \
-       --scope '/subscriptions/<Your Subscription ID>' \
-       --policy 'RestrictResourceTypes'
-   ```
-
-### Assigning to a Resource Group
-
+Assigning to a Resource Group
 To assign these policies at the resource group level, use similar commands but specify the resource group scope:
+Assign the Allowed Locations Policy:
+bash
+az policy assignment create --name 'AllowedLocationsAssignmentRG' \
+    --display-name 'Allowed Locations Assignment for RG' \
+    --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
+    --policy 'allowed-locations'
 
-1. **Assign the Allow Specific Regions Policy**:
+Assign the Allowed Resource Types Policy:
+bash
+az policy assignment create --name 'AllowedResourceTypesAssignmentRG' \
+    --display-name 'Allowed Resource Types Assignment for RG' \
+    --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
+    --policy 'allowed-resource-types'
 
-   ```bash
-   az policy assignment create --name 'AllowSpecificRegionsAssignmentRG' \
-       --display-name 'Allow Specific Regions Assignment for RG' \
-       --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
-       --policy 'AllowSpecificRegions'
-   ```
-
-2. **Assign the Restrict Resource Types Policy**:
-
-   ```bash
-   az policy assignment create --name 'RestrictResourceTypesAssignmentRG' \
-       --display-name 'Restrict Resource Types Assignment for RG' \
-       --scope '/subscriptions/<Your Subscription ID>/resourceGroups/<Your Resource Group Name>' \
-       --policy 'RestrictResourceTypes'
-   ```
-
-## Testing the Configuration
-
+Testing the Configuration
 To verify that your policies are working as intended, attempt to create resources that violate these policies.
+Test Region Restriction: Try creating a storage account in an unauthorized region (e.g., centralus):
+bash
+az storage account create --name "<YourStorageAccountName>" \
+    --resource-group "<YourResourceGroupName>" \
+    --location "centralus" \
+    --sku Standard_LRS
 
-1. **Test Region Restriction**: Try creating a storage account in an unauthorized region (e.g., `centralus`):
+Test Resource Type Restriction: Try creating an unauthorized resource type (e.g., Microsoft.Compute/virtualMachines if not allowed):
+bash
+az vm create --resource-group "<YourResourceGroupName>" \
+    --name "<YourVMName>" \
+    --image UbuntuLTS
 
-   ```bash
-   az storage account create --name "<YourStorageAccountName>" \
-       --resource-group "<YourResourceGroupName>" \
-       --location "centralus" \
-       --sku Standard_LRS
-   ```
+Check for Errors: You should receive errors indicating that resource creation is denied due to policy restrictions.
+Review Compliance: You can check compliance status by running:
+bash
+az policy assignment list --scope '/subscriptions/<Your Subscription ID>'
 
-2. **Test Resource Type Restriction**: Try creating an unauthorized resource type (e.g., `Microsoft.Compute/virtualMachines` if not allowed):
-
-   ```bash
-   az vm create --resource-group "<YourResourceGroupName>" \
-       --name "<YourVMName>" \
-       --image UbuntuLTS
-   ```
-
-3. **Check for Errors**: You should receive errors indicating that resource creation is denied due to policy restrictions.
-
-4. **Review Compliance**: You can check compliance status by running:
-
-   ```bash
-   az policy assignment list --scope '/subscriptions/<Your Subscription ID>'
-   ```
-
-## Conclusion
-
+Conclusion
 By following these steps, you can effectively manage which resources can be deployed in your Azure environment based on region and type. This ensures compliance with organizational policies and regulatory requirements, helping maintain a secure and organized cloud infrastructure.
 
 
