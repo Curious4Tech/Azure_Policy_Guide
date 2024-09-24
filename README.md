@@ -1,9 +1,3 @@
-
-This guide incorporating the provided code snippets for setting up Azure Policies for allowed locations and allowed resource types using Azure CLI.
-
-
-# Azure Policy Setup for Allowed Locations and Resource Types
-
 This README provides a comprehensive guide on how to set up two distinct Azure Policies using Azure CLI: one for allowing resource creation in specific regions and another for restricting resource type creation. These policies are essential for maintaining compliance and governance in your Azure environment.
 
 ## Table of Contents
@@ -26,11 +20,19 @@ Before you begin, ensure you have the following:
 - Appropriate permissions to create and assign policies in your Azure environment.
 
 ## Creating the Policies
+1. **Login to Azure**:  Open your terminal and log in using:
+ ```bash
+az login
+   ```
+2. **Set Your Subscription Context**: If you have multiple subscriptions, set the context to your desired subscription:
 
+   ```bash
+   az account set --subscription "<Your Subscription ID>"
+   ```
 ### Policy 1: Allowed Locations
 
 To create a policy that restricts resource deployment to specific regions, follow these steps:
-
+Below is an example policy that allows only eastus and westus regions:
 1. **Create the Allowed Locations Policy**: Run the following command in your terminal:
 
    ```bash
@@ -54,9 +56,11 @@ To create a policy that restricts resource deployment to specific regions, follo
        --mode All
    ```
 
+
 ### Policy 2: Allowed Resource Types
 
 Next, create a policy that restricts the types of resources that can be created.
+Below is an example policy that only allows Microsoft.Storage/storageAccounts and Microsoft.Network/virtualNetworks:
 
 1. **Create the Allowed Resource Types Policy**: Run the following command:
 
