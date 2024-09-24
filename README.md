@@ -41,24 +41,22 @@ To create a policy that restricts resource deployment to specific regions, follo
 1. **Create a JSON Policy File**: Open your preferred code editor and create a new file named `AllowSpecificRegionsPolicy.json`. Below is an example policy that allows only `eastus` and `westus` regions:
 
    ```json
-   {
-     "mode": "Indexed",
-     "policyRule": {
-       "if": {
-         "not": {
-           "field": "location",
-           "in": [
-             "eastus",
-             "westus"
-           ]
-         }
-       },
-       "then": {
-         "effect": "deny"
-       }
-     },
-     "parameters": {}
-   }
+   '{
+    "if": {
+        "allOf": [
+            {
+                "field": "type",
+                "notIn": [
+                    "Microsoft.Compute/virtualMachines",
+                    "Microsoft.Storage/storageAccounts"
+                ]
+            }
+        ]
+    },
+    "then": {
+        "effect": "deny"
+    }
+}' --mode All
    ```
 
 2. **Create the Policy Definition Using Azure CLI**: Run the following command, replacing `<path-to-your-json-file>` with the actual path:
@@ -78,24 +76,20 @@ Next, create a policy that restricts the types of resources that can be created.
 1. **Create a JSON Policy File**: Create another file named `RestrictResourceTypesPolicy.json`. Below is an example policy that only allows `Microsoft.Storage/storageAccounts` and `Microsoft.Network/virtualNetworks`:
 
    ```json
-   {
-     "mode": "Indexed",
-     "policyRule": {
-       "if": {
-         "not": {
-           "field": "type",
-           "in": [
-             "Microsoft.Storage/storageAccounts",
-             "Microsoft.Network/virtualNetworks"
-           ]
-         }
-       },
-       "then": {
-         "effect": "deny"
-       }
-     },
-     "parameters": {}
-   }
+  '{
+    "if": {
+        "not": {
+            "field": "location",
+            "in": [
+                "eastus",
+                "westeurope"
+            ]
+        }
+    },
+    "then": {
+        "effect": "deny"
+    }
+}' --mode All
    ```
 
 2. **Create the Policy Definition Using Azure CLI**: Run the following command:
